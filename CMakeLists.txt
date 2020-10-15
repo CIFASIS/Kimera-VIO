@@ -5,7 +5,8 @@ project(kimera_vio VERSION 1.0 LANGUAGES CXX)
 # Prefer to use system installation of gflags/glog
 set(GFLAGS_PREFER_EXPORTED_GFLAGS_CMAKE_CONFIGURATION TRUE)
 set(GLOG_PREFER_EXPORTED_GLOG_CMAKE_CONFIGURATION TRUE)
-list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_SOURCE_DIR}/cmake)
+list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+message(STATUS "CMAKE_MODULE_PATH visto por CMakeLists.txt de Kimera-VIO: ${CMAKE_MODULE_PATH}")
 
 IF(APPLE)
     # Fix linking on 10.14+. See https://stackoverflow.com/questions/54068035
@@ -167,24 +168,29 @@ if(BUILD_TESTS)
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/gtest.cmake
     external/googletest-download/CMakeLists.txt)
   execute_process(COMMAND "${CMAKE_COMMAND}" -G "${CMAKE_GENERATOR}" .
-      WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/external/googletest-download"
+      WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/external/googletest-download"
       OUTPUT_QUIET)
   execute_process(COMMAND "${CMAKE_COMMAND}" --build .
-      WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/external/googletest-download"
+      WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/external/googletest-download"
       OUTPUT_QUIET)
 
   # Prevent GoogleTest from overriding our compiler/linker options
   # when building with Visual Studio
   set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-
-  # Add googletest directly to our build. This adds
-  # the following targets: gtest, gtest_main, gmock
-  # and gmock_main
-  # Exclude these targets from installation with EXCLUDE_FROM_ALL
-  # Check issue: https://github.com/google/googletest/issues/868
-  add_subdirectory("${CMAKE_BINARY_DIR}/external/googletest-src"
-                   "${CMAKE_BINARY_DIR}/external/googletest-build"
-                   EXCLUDE_FROM_ALL)
+  
+  # If gtest target exists, then gtest_main, gmock and gmock_main should also
+  # exist and this add_subdirectory should not be executed.
+  if (NOT TARGET gtest)
+    # Add googletest directly to our build. This adds
+    # the following targets: gtest, gtest_main, gmock
+    # and gmock_main
+    # Exclude these targets from installation with EXCLUDE_FROM_ALL
+    # Check issue: https://github.com/google/googletest/issues/868
+    add_subdirectory("${CMAKE_CURRENT_BINARY_DIR}/external/googletest-src"
+                    "${CMAKE_CURRENT_BINARY_DIR}/external/googletest-build"
+                    EXCLUDE_FROM_ALL)
+  endif()
+  
 
   # The gtest/gmock targets carry header search path
   # dependencies automatically when using CMake 2.8.11 or
