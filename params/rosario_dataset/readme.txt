@@ -1,0 +1,3 @@
+ImuParams.yaml has the finally used parameters.
+ImuParams_1.yaml and ImuParams_2.yaml have the calculated IMU parameters and the calculated IMU parameters increased in an order of magnitude, respectively.
+ImuParams_3.yaml, ImuParams_4.yaml, ImuParams_5.yaml, ImuParams_6.yaml, ImuParams_7.yaml and ImuParams_8.yaml have the time shifts calculated by VINS-Fusion for sequences 01, 02, 03, 04, 05 and 06, respectively.
