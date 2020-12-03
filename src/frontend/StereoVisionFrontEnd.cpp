@@ -181,6 +181,7 @@ FrontendOutput::UniquePtr StereoVisionFrontEnd::nominalSpin(
   CHECK(!stereoFrame_k_);  // processStereoFrame is setting this to nullptr!!!
   VLOG(10) << "Finished processStereoFrame.";
   //////////////////////////////////////////////////////////////////////////////
+  std::cout << "frame_count_: " << frame_count_ << std::endl;
 
   if (stereoFrame_km1_->isKeyframe()) {
     // We got a keyframe!
