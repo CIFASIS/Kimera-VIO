@@ -97,6 +97,7 @@ FrontendOutput::UniquePtr StereoVisionFrontEnd::bootstrapSpin(
 
   // Initialize members of the frontend
   processFirstStereoFrame(input.getStereoFrame());
+  output.Log();
 
   // Initialization done, set state to nominal
   frontend_state_ = FrontendState::Nominal;

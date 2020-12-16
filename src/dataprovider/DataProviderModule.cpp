@@ -74,7 +74,7 @@ DataProviderModule::InputUniquePtr DataProviderModule::getInputPacket() {
   if (timestamp_last_frame_ == kNoFrameYet) {
     // TODO(Toni): wouldn't it be better to get all IMU measurements up to this
     // timestamp? We should add a method to the IMU buffer for that.
-    VLOG(1) << "Skipping first frame, because we do not have a concept of "
+    LOG(WARNING) << "Skipping first frame, because we do not have a concept of "
                "a previous frame timestamp otherwise.";
     timestamp_last_frame_ = timestamp;
     return nullptr;
