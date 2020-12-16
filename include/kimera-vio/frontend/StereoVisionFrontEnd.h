@@ -41,6 +41,7 @@
 #include "kimera-vio/utils/Timer.h"
 #include "kimera-vio/visualizer/Display-definitions.h"
 #include "kimera-vio/visualizer/Visualizer3D-definitions.h"
+#include "timestamps_logger.h"
 
 #include "kimera-vio/pipeline/PipelineModule.h"
 
@@ -272,6 +273,8 @@ class StereoVisionFrontEnd {
 
   // Frontend logger.
   std::unique_ptr<FrontendLogger> logger_;
+
+  TimestampsLogger output;
 };
 
 }  // namespace VIO

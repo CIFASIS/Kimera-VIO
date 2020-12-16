@@ -61,7 +61,8 @@ StereoVisionFrontEnd::StereoVisionFrontEnd(
       trackerStatusSummary_(),
       output_images_path_("./outputImages/"),
       display_queue_(display_queue),
-      logger_(nullptr) {  // Only for debugging and visualization.
+      logger_(nullptr),  // Only for debugging and visualization.
+      output("output.txt") {
   if (log_output) {
     logger_ = VIO::make_unique<FrontendLogger>();
   }
@@ -182,6 +183,7 @@ FrontendOutput::UniquePtr StereoVisionFrontEnd::nominalSpin(
   VLOG(10) << "Finished processStereoFrame.";
   //////////////////////////////////////////////////////////////////////////////
   std::cout << "frame_count_: " << frame_count_ << std::endl;
+  output.Log();
 
   if (stereoFrame_km1_->isKeyframe()) {
     // We got a keyframe!
