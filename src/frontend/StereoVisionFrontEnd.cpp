@@ -62,7 +62,7 @@ StereoVisionFrontEnd::StereoVisionFrontEnd(
       output_images_path_("./outputImages/"),
       display_queue_(display_queue),
       logger_(nullptr),  // Only for debugging and visualization.
-      output("output.txt") {
+      output("output.csv") {
   if (log_output) {
     logger_ = VIO::make_unique<FrontendLogger>();
   }
